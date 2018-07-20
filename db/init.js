@@ -1,7 +1,13 @@
 const mongoose = require('mongoose')
+const glob = require('glob')
+const path = require('path')
 const db = "mongodb://localhost/shopping-db"
 
 mongoose.Promise = global.Promise
+
+exports.initSchemas = () => { // 引入所有 的 Scheme
+	glob.sync(path.resolve(__dirname, './schema/', '**/*.js')).forEach(require)
+}
 
 exports.connect = () => {
 	// 连接数据库
@@ -40,3 +46,8 @@ exports.connect = () => {
 	})
 }
 
+// const db = 'mongodb://localhost/dbname'
+
+// console.log(() => { // 引入所有 的 Scheme
+// 	glob.sync(path.resolve(__dirname, './schema/', '**/*.js')).forEach(require)
+// })
